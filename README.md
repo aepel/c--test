@@ -28,7 +28,7 @@ To run this project locally, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/chronic-patient-tracking-spa.git
+   git clone https://github.com/aepel/chronic-patient-tracking-spa
    cd chronic-patient-tracking-spa
 
 ### Things i don't like about it.
