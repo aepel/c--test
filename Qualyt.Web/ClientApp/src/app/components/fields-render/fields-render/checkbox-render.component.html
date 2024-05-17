@@ -1,0 +1,16 @@
+<form [formGroup]="_formGroup">
+    <mat-checkbox [(ngModel)]="data.value" name="{{ data.type }}_{{ data.id }}" formControlName="{{data.id}}"
+                  (change)="requiredToggle(_formGroup,idsHijos,data.required && data.value)" [disabled]="disabled">
+        {{ data.name }}
+    </mat-checkbox>
+    <br />
+    <div id="hijos-{{ data.id }}" class="hijo" *ngIf="data.childFields && data.value">
+      <span *ngFor="let c of data.childFields">
+        <app-checkbox-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==0" [disabled]="disabled"></app-checkbox-render>
+        <app-text-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==2" [disabled]="disabled"></app-text-render>
+        <app-numeric-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==3" [disabled]="disabled"></app-numeric-render>
+        <app-date-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==4" [disabled]="disabled"></app-date-render>
+        <app-options-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==7" [disabled]="disabled"></app-options-render>
+      </span>
+    </div>
+</form>

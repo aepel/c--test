@@ -1,0 +1,72 @@
+<app-info-treatment *ngIf="treatment" [treatmentId]="treatment.id" [isLaboratory]="isLaboratory" #infoTreatment></app-info-treatment>
+
+<div _ngcontent-c10="" class="row" *ngIf="!isLaboratory && treatment && (treatment.state==TreatmentState.pending || treatment.state!=TreatmentState.finalized)">
+  <div _ngcontent-c10="" class="col-sm-12">
+    <app-card _ngcontent-c10="" class="ng-tns-c10-8 ng-tns-c6-9" ng-reflect-header-content="Lorem ipsum dolor sit amet, co" ng-reflect-title="Bootstrap tab">
+      <div class="card-block-hid ng-trigger ng-trigger-cardToggle" style="overflow: hidden;">
+        <div class="card-block" ng-reflect-klass="card-block">
+          <div _ngcontent-c10="" class="row ng-tns-c10-8">
+            <div class="mr-1" *ngIf="treatment.state!=TreatmentState.finalized">
+              <button type="button" mat-stroked-button class=""
+                  [routerLink]="['/control-trackings/detail']"
+                  [queryParams]="{treatmentId: treatment.id, type: ControlType.normal}">
+                <mat-icon aria-label="Example icon-button with a heart icon">add_circle_outline</mat-icon>
+                Crear seguimiento
+              </button>
+            </div>
+            <div class="mr-1" *ngIf="treatment.state==TreatmentState.pending"
+                      [matTooltip]="treatment.patient.state==PatientState.preregistered?'No podrá dar inicio al tratamiento hasta que el paciente se encuentre inscrito':''">
+              <button type="button" mat-stroked-button color="primary" class=""
+                      [disabled]="treatment.patient.state==PatientState.preregistered"
+                      [routerLink]="['/control-trackings/detail']"
+                      [queryParams]="{treatmentId: treatment.id, type: ControlType.start}">
+                <mat-icon aria-label="Example icon-button with a heart icon">play_circle_outline</mat-icon>
+                Crear registro de inicio
+              </button>
+            </div>
+            <div *ngIf="treatment.state!=TreatmentState.finalized">
+              <button type="button" mat-stroked-button color="warn" class=""
+                  [routerLink]="['/control-trackings/detail']"
+                  [queryParams]="{treatmentId: treatment.id, type: ControlType.end}">
+                <mat-icon aria-label="Example icon-button with a heart icon">pause_circle_outline</mat-icon>
+                Crear registro de fin
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<app-datatable [service]="service"
+               [columns]="columns"
+               [colors]="colors"
+               [actionsRoute]="'control-trackings'"
+               [delete]="!isLaboratory"
+               notCreate="true"
+               [deleteProperty]="isAdmin?'active':'editableByOperator'"
+               [editProperty]="'editable'"
+               [edit]="isAdmin && !isLaboratory"
+               (deleted)="deleteCatcher($event)"
+               [inheritParamsOnCreate]="true"
+               [paramsOnListService]="datatableParams" #dataTable
+               backButtonRoute="/treatments">
+</app-datatable>
+
+
+<app-modal-basic #modalDefault>
+  <div class="app-modal-header">
+    <h4 class="modal-title">¿Borrar?</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <h5>¿Está seguro de que desea borrarla/o?</h5>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default waves-effect" (click)="modalDefault.hide()">Cancelar</button> &nbsp;
+    <button type="button" class="btn btn-primary waves-effect waves-light " (click)="confirmDeleted(deletedid)">Aplicar</button>
+  </div>
+</app-modal-basic>

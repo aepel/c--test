@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Patología</span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(form.valid)" #form="ngForm" [hidden]="!pathology" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nombre" type="text" class="underline" id="name" required
+                 [(ngModel)]="pathology.name" name="name" #name="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && name.untouched) || name.valid" class="alert alert-danger">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <app-dropdown-with-filter [options]="laboratories" [(value)]="pathology.laboratoryId"
+                                optionLabel="name"
+                                placeholder="Laboratorio" required="true"
+                                [form]="form" controlName="laboratoryId">
+      </app-dropdown-with-filter>
+
+      <app-fields-manager [campos]="pathology.fields" *ngIf="pathology"></app-fields-manager>
+      <br /><br />
+      <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/pathologies']">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button class="btn btn-rounded¿ btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

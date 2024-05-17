@@ -1,0 +1,28 @@
+<div class="card" *ngIf="!noCard">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Tratamiento</span>
+  </div>
+  <div class="card-block">
+    <div *ngIf="treatment">
+      <h5>Información básica</h5><br />
+      <app-treatment-basic-info [treatment]="treatment" [readonly]="disabled" [isLaboratory]="isLaboratory"></app-treatment-basic-info>
+
+      <h5>Datos referentes a la patología</h5><br />
+      <app-fields-render *ngIf="treatment.pathologyFields" [fields]="treatment.pathologyFields" [disabled]="disabled"></app-fields-render>
+
+      <h5>Datos referentes al producto</h5><br />
+      <app-fields-render *ngIf="treatment.productFields" [fields]="treatment.productFields" [disabled]="disabled"></app-fields-render>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="treatment && noCard">
+  <h5>Información básica</h5><br />
+  <app-treatment-basic-info [treatment]="treatment" [readonly]="disabled"></app-treatment-basic-info>
+
+  <h5>Datos referentes a la patología</h5><br />
+  <app-fields-render *ngIf="treatment.pathologyFields" [fields]="treatment.pathologyFields" [disabled]="disabled"></app-fields-render>
+
+  <h5>Datos referentes al producto</h5><br />
+  <app-fields-render *ngIf="treatment.productFields" [fields]="treatment.productFields" [disabled]="disabled"></app-fields-render>
+</div>

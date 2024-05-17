@@ -1,0 +1,9 @@
+<form [formGroup]="_formGroup">
+    <mat-form-field class="formFieldAncho">
+        <textarea matInput [placeholder]="data.name" matTextareaAutosize matAutosizeMinRows="2"
+                  [(ngModel)]="data.value" [readonly]="disabled"
+                  name="{{ data.tipo }}_{{ data.id }}"
+                  [required]="data.required" formControlName="{{data.id}}"></textarea>
+    </mat-form-field>
+    <br />
+</form>

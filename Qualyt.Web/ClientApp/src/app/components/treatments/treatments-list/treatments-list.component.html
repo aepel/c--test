@@ -1,0 +1,26 @@
+<app-datatable [service]="service"
+               [columns]="columns"
+               [actions]="actions"
+               [notCreate]="isLaboratory"
+               [actionsRoute]="'treatments'"
+               [delete]="!isLaboratory"
+               [edit]="!isLaboratory"
+               editProperty="editable"
+               (deleted)="deleteCatcher($event)" #dataTable
+               *ngIf="tableReady">
+</app-datatable>
+<app-modal-basic #modalDefault>
+  <div class="app-modal-header">
+    <h4 class="modal-title">¿Borrar?</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <h5>¿Está segura/o de que desea borrarla/o?</h5>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default waves-effect" (click)="modalDefault.hide()">Cancelar</button> &nbsp;
+    <button type="button" class="btn btn-primary waves-effect waves-light " (click)="confirmDeleted(deletedid)">Aplicar</button>
+  </div>
+</app-modal-basic>

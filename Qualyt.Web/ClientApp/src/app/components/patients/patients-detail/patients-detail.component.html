@@ -1,0 +1,247 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Paciente</span>
+  </div>
+  <div class="card-block">
+    <p-dialog header="Nuevo Médico" *ngIf="display" [(visible)]="display" [responsive]="true" [width]="800">
+      <app-doctors-detail (ConfirmEvent)="NuevoMedico($event)"></app-doctors-detail>
+
+    </p-dialog>
+
+    <p-dialog header="Nuevo Enfermero/a" *ngIf="displayEnfermera" [(visible)]="displayEnfermera" [responsive]="true" [width]="800">
+      <app-nurses-detail (ConfirmEvent)="NuevoEnfermera($event)"></app-nurses-detail>
+
+    </p-dialog>
+
+
+    <form (ngSubmit)="onSubmit(patientForm.valid)" #patientForm="ngForm" [hidden]="!patient" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nombre" type="text" class="underline" id="name" required
+                 [(ngModel)]="patient.name" name="name" #name="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!patientForm.submitted && name.untouched) || name.valid" class="alert alert-danger">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Apellido" type="text" class="underline" id="surname" required
+                 [(ngModel)]="patient.surname" name="surname" #surname="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!patientForm.submitted && surname.untouched) || surname.valid" class="alert alert-danger">
+          El apellido es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Apellido materno" type="text" class="underline" id="mothersSurname"
+                 [(ngModel)]="patient.mothersSurname" name="mothersSurname" #mothersSurname="ngModel">
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nro de tarjeta del seguimiento" type="text" class="underline"
+                 id="idNumber"
+                 [(ngModel)]="patient.cardNumber" name="idNumber" #idNumber="ngModel"
+                 pattern="[0-9]*">
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-group">
+        <app-formatted-datepicker [propertyName]="'birthDate'"
+                                  [required]="true"
+                                  [requiredError]="'La fecha de nacimiento es requerida'"
+                                  [model]="patient"
+                                  [placeholder]="'Fecha de nacimiento'"
+                                  [form]="patientForm">
+        </app-formatted-datepicker>
+      </div>
+
+      <app-dropdown-with-filter [options]="genders" [(value)]="patient.gender"
+                                optionLabel="text" placeholder="Sexo" required="true"
+                                [form]="patientForm" controlName="gender"
+                                optionValue="value">
+      </app-dropdown-with-filter>
+
+      <app-dropdown-with-filter [options]="maritalStatuss" [(value)]="patient.maritalStatus"
+                                optionLabel="text" placeholder="Estado civil" required="true"
+                                [form]="patientForm" controlName="maritalStatus"
+                                optionValue="value">
+      </app-dropdown-with-filter>
+
+      <app-dropdown-with-filter [options]="countries" [(value)]="patient.countryId"
+                                optionLabel="name" placeholder="País" required="true"
+                                [form]="patientForm" controlName="countryId"
+                                [disabled]="isOperator"
+                                (change)="setSelectedCountry($event)">
+      </app-dropdown-with-filter>
+
+      <app-dropdown-with-filter [options]="plans" [(value)]="patient.planId"
+                                optionLabel="name" placeholder="Programa" required="true"
+                                [form]="patientForm" controlName="planId"
+                                [disabled]="isOperator"
+                                (change)="setSelectedPlan($event)">
+      </app-dropdown-with-filter>
+
+      <div class="form-group" *ngIf="selectedCountry">
+
+        <mat-form-field class="formFieldAncho">
+
+          <input matInput placeholder="Número de identificación (RUT, DNI)" type="text" class="underline"
+                 id="DniNumber" required
+                 [(ngModel)]="patient.idNumber" name="DniNumber" #dniNumber="ngModel"
+                 [pattern]="selectedCountry.idPattern">
+        </mat-form-field>
+        <div [hidden]="(!patientForm.submitted && dniNumber.untouched) || dniNumber.valid" class="alert alert-danger">
+          El número de identificación es requerido y debe seguir el formato del país seleccionado.
+        </div>
+      </div>
+
+      <div class="form-group">
+
+        <mat-form-field class="formFieldAncho">
+          <input matInput ngx-google-places-autocomplete
+                 #placesRef="ngx-places"
+                 (onAddressChange)="handleAddressChange($event)"
+                 placeholder="Ingrese dirección" [(ngModel)]="patient.location.address" required name="direccion" id="direccion">
+          <input type="hidden" [(ngModel)]="patient.location.latitude" name="latitud" id="latitud">
+          <input type="hidden" [(ngModel)]="patient.location.longitude" name="longitude" id="longitude">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Piso" type="number" class="underline" id="floor"
+                 [(ngModel)]="patient.location.floor" name="floor"
+                 #floor="ngModel" onkeydown="javascript: return event.keyCode == 69 ? false : true">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Departamento" type="text" class="underline" id="apartment"
+                 [(ngModel)]="patient.location.apartment" name="apartment" #apartment="ngModel">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <span matPrefix>+{{selectedCountry?selectedCountry.prefix:""}} &nbsp;</span>
+          <input matInput placeholder="Teléfono fijo" type="text" class="underline" id="phoneNumber"
+                 [(ngModel)]="patient.phoneNumber" name="phoneNumber" #phoneNumber="ngModel"
+                 [pattern]="selectedCountry?'[0-9]{'+selectedCountry.digitsOfACellPhoneNumber+'}':''"
+                 onkeydown="javascript: return event.keyCode == 69 ? false : true">
+        </mat-form-field>
+        <div *ngIf="selectedCountry" [hidden]="(!patientForm.submitted && phoneNumber.untouched) || phoneNumber.valid" class="alert alert-danger">
+          El teléfono en {{selectedCountry.name}} debe constar de {{selectedCountry.digitsOfACellPhoneNumber}} dígitos
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <span matPrefix>+{{selectedCountry?selectedCountry.prefix:""}} &nbsp;</span>
+          <input matInput placeholder="Teléfono celular" type="text" class="underline" id="cellPhoneNumber"
+                 [(ngModel)]="patient.cellPhoneNumber" name="cellPhoneNumber"
+                 #cellPhoneNumber="ngModel" required
+                 [pattern]="selectedCountry?'[0-9]{'+selectedCountry.digitsOfACellPhoneNumber+'}':''"
+                 onkeydown="javascript: return event.keyCode == 69 ? false : true">
+        </mat-form-field>
+        <div *ngIf="selectedCountry" [hidden]="(!patientForm.submitted && cellPhoneNumber.untouched) || cellPhoneNumber.valid" class="alert alert-danger">
+          El teléfono celular es requerido y en {{selectedCountry.name}} debe constar de {{selectedCountry.digitsOfACellPhoneNumber}} dígitos
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Email" type="email" class="underline" id="email"
+                 [(ngModel)]="patient.email" name="email" #email="ngModel"
+                 pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+        </mat-form-field>
+        <div [hidden]="(!patientForm.submitted && email.untouched) || email.valid" class="alert alert-danger">
+          El email es requerido y debe ser del tipo: ejemplo@ejemplo.abc
+        </div>
+      </div>
+
+
+      <div class="form-group" style="display:flex;">
+        <app-dropdown-with-filter [options]="doctors" [(value)]="patient.doctorId"
+                                  optionLabel="fullNameAndSpecialty"
+                                  placeholder="Médico" required="true"
+                                  [form]="patientForm" controlName="doctorId" style="width:95%"
+                                  class="mr-1">
+        </app-dropdown-with-filter>
+        <button mat-stroked-button (click)="show()" type="button"
+                style="width:5%;height:fit-content">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </div>
+
+
+      <div class="form-group" style="display:flex">
+        <app-dropdown-with-filter [options]="nurses" [(value)]="patient.nurseId"
+                                  optionLabel="fullName" placeholder="Enfermera/o"
+                                  [form]="patientForm" controlName="nurseId"
+                                  style="width:95%" class="mr-1">
+        </app-dropdown-with-filter>
+        <button mat-stroked-button (click)="showNurse()" type="button"
+                style="width:5%;height:fit-content">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </div>
+
+        <app-dropdown-with-filter [options]="healthInsurances" [(value)]="patient.healthInsuranceId"
+                                  optionLabel="name" placeholder="Seguro médico" required="true"
+                                  [form]="patientForm" controlName="healthInsuranceId"
+                                  *ngIf="healthInsurances" (change)="healthInsuranceSelected($event)">
+        </app-dropdown-with-filter>
+
+        <app-fields-render *ngIf="patient.healthInsuranceFields" [fields]="patient.healthInsuranceFields"></app-fields-render>
+
+        <app-dropdown-with-filter [options]="pathologies" [(value)]="patient.patientPathologiesId"
+                                  optionLabel="name" placeholder="Patologia" required="true"
+                                  [form]="patientForm" controlName="patientPathologiesId">
+        </app-dropdown-with-filter>
+
+        <div class="form-group">
+
+          <mat-slide-toggle class="example-margin" name="secondHealthInsurance"
+                            color="primary"
+                            [(ngModel)]="patient.secondHealthInsurance">
+            Seguro médico complementario
+          </mat-slide-toggle>
+        </div>
+
+        <app-dropdown-with-filter [options]="contactMethods" [(value)]="patient.preferedContactMethod"
+                                  optionLabel="text" placeholder="Método preferido de contacto"
+                                  required="true" [form]="patientForm" controlName="preferedContactMethod"
+                                  optionValue="value">
+        </app-dropdown-with-filter>
+
+        <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/patients']">
+          <i class="fa fa-chevron-left"></i> Volver
+        </a>
+        <button type="submit" mat-raised-button class="btn btn-rounded btn-primary hidden-print pull-right">
+          Confirmar <i class="fa fa-check"></i>
+        </button>
+</form>
+
+  </div>
+</div>
+
+
+<div class="card" *ngIf="patient.id">
+  <div class="card-block">
+    <app-files-manager [uploadRoute]="'api/patients/uploadFile?id='+patient.id"
+                       [downloadRoute]="'api/patients/downloadFile'"
+                       [removeRoute]="'api/patients/removeFile'"
+                       [downloadsRoute]="'api/patients/downloadFiles?id='+patient.id">
+    </app-files-manager>
+  </div>
+</div>

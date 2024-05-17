@@ -1,0 +1,44 @@
+<div _ngcontent-c10="" class="row">
+  <div _ngcontent-c10="" class="col-sm-12">
+    <app-card _ngcontent-c10="" class="ng-tns-c10-8 ng-tns-c6-9" ng-reflect-header-content="Lorem ipsum dolor sit amet, co" ng-reflect-title="Bootstrap tab">
+        <div class="card-block-hid ng-trigger ng-trigger-cardToggle" style="overflow: hidden;">
+          <div class="card-block" ng-reflect-klass="card-block">
+            <div _ngcontent-c10="" class="row ng-tns-c10-8">
+              <div _ngcontent-c10="" class="col-md-12 col-xl-6" *ngIf="!isLaboratory && patient">
+                <span class="ng-star-inserted ">
+                  <h5 class="m-b-10 ng-star-inserted">Paciente</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{patientFullName}}</p>
+                </span>
+                <span class="ng-star-inserted">
+                  <h5 class="m-b-10 ng-star-inserted">Teléfono</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{patientTelephoneNumber}}</p>
+                </span>
+                <span class="ng-star-inserted">
+                  <h5 class="m-b-10 ng-star-inserted">Email</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{patientEmail}}</p>
+                </span>
+                <span class="ng-star-inserted">
+                  <h5 class="m-b-10 ng-star-inserted">Estado del paciente</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{patient.stateName}}</p>
+                </span>
+              </div>
+              <div _ngcontent-c10="" class="col-md-12 col-xl-6" *ngIf="treatmentId && treatment">
+                <span class="ng-star-inserted">
+                  <h5 class="m-b-10 ng-star-inserted">Nombre Médico</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{treatmentDoctor}}</p>
+                </span>
+                <span class="ng-star-inserted">
+                  <h5 class="m-b-10 ng-star-inserted">Producto</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{treatmentProduct}}</p>
+                </span>
+                <span class="ng-star-inserted">
+                  <h5 class="m-b-10 ng-star-inserted">Estado del tratamiento</h5>
+                  <p class="text-muted m-b-10 ng-star-inserted">   {{treatment.stateName}}</p>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </app-card>
+  </div>
+</div>

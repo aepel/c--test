@@ -1,0 +1,103 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Usuario</span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm" *ngIf="user" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nombre" type="text" class="underline" id="name" [required]="!isOperator"
+                 [(ngModel)]="user.name" name="name" #name="ngModel" [disabled]="isOperator">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && name.untouched) || name.valid" class="alert alert-danger">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Apellido" type="text" class="underline" id="surname" [required]="!isOperator"
+                 [(ngModel)]="user.surname" name="surname" #surname="ngModel" [disabled]="isOperator">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && surname.untouched) || surname.valid" class="alert alert-danger">
+          El apellido es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Apellido materno" type="text" class="underline" id="mothersSurname"
+                 [(ngModel)]="user.mothersSurname" name="mothersSurname" #mothersSurname="ngModel" [disabled]="isOperator">
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Email" type="email" class="underline" id="email" [required]="!isOperator"
+                 [(ngModel)]="user.email" name="email" #email="ngModel"
+                 pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [disabled]="isOperator" readonly onfocus="this.removeAttribute('readonly');">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && email.untouched) || email.valid" class="alert alert-danger">
+          El email es requerido y debe ser del tipo: ejemplo@ejemplo.abc
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-checkbox class="example-margin exportable"
+                      color="primary"
+                      [(ngModel)]="user.enabled"
+                      name="active" [disabled]="isOperator">
+          Habilitado
+        </mat-checkbox>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <mat-select placeholder="Rol" [(ngModel)]="role" #rol="ngModel" id="role"
+                      name="rol" [required]="!isOperator" class="underline" [disabled]="isOperator">
+            <mat-option value="ADMIN">ADMIN</mat-option>
+            <mat-option value="LABORATORIO">LABORATORIO</mat-option>
+            <mat-option value="OPERADOR">OPERADOR</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <app-dropdown-with-filter [options]="laboratories" [(value)]="user.laboratoryId"
+                                optionLabel="name" placeholder="Laboratorio" [required]="!isOperator"
+                                [form]="form" controlName="laboratoryId"
+                                optionValue="id" *ngIf="role=='LABORATORIO'" [disabled]="isOperator"
+                                (change)="laboratoryChange($event)">
+      </app-dropdown-with-filter>
+
+      <app-multidropdown-with-filter [options]="countries" optionLabel="name"
+                                     placeholder="Paises" [required]="!isOperator"
+                                     [form]="form" controlName="countryId"
+                                     [(selecteds)]="selectedCountries" [disabled]="isOperator"
+                                     (selectedsChange)="countriesChange($event)">
+      </app-multidropdown-with-filter>
+
+      <app-multidropdown-with-filter [options]="plans" optionLabel="name"
+                                     placeholder="Programas" [required]="!isOperator"
+                                     [form]="form" controlName="planId"
+                                     [(selecteds)]="selectedPlans" [disabled]="isOperator">
+      </app-multidropdown-with-filter>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput [placeholder]="user.id?'Ingrese una contraseña si desea cambiarla':'Contraseña'" type="password" class="underline" id="passwordChange"
+                 [(ngModel)]="user.passwordChange" name="passwordChange" #passwordChange="ngModel"
+                  readonly onfocus="this.removeAttribute('readonly');">
+        </mat-form-field>
+      </div>
+
+      <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="[(isOperator?'/dashboard':'/users')]">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button class="btn btn-rounded btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

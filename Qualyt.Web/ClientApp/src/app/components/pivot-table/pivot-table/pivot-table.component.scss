@@ -1,0 +1,19 @@
+:host ::ng-deep .pvtUi {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+:host ::ng-deep #pivot > table > tr:nth-child(1) > td.pvtAxisContainer.pvtHorizList.pvtCols.pvtUiCell.ui-sortable{
+  width:100%;
+}
+
+:host ::ng-deep [data-title="Edit in Chart Studio"],
+:host ::ng-deep [data-title="Box Select"],
+:host ::ng-deep [data-title="Lasso Select"],
+:host ::ng-deep [data-title="Toggle Spike Lines"],
+:host ::ng-deep [data-title="Compare data on hover"],
+:host ::ng-deep [data-title="Produced with Plotly"],
+:host ::ng-deep [data-title="Show closest data on hover"] {
+  display: none;
+}

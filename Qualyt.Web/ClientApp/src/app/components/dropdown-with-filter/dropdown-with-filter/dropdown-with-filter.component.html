@@ -1,0 +1,13 @@
+<div class="form-group">
+  <p-dropdown [options]="options" (onChange)="onSelectChange($event)" [optionLabel]="optionLabel"
+              filter="true" name="model.selectedId" [style]="{'width':'100%'}"
+              [placeholder]="placeholder" [required]="required" appendTo="body"
+              emptyFilterMessage="No se encontraron resultados."
+              #selectedId="ngModel" [(ngModel)]="selected" [disabled]="disabled">
+    
+    
+  </p-dropdown>
+  <div [hidden]="disabled || (!required) || (!form) || (!form.submitted && selectedId.untouched) || selectedId.valid" class="alert alert-danger">
+    Debe seleccionar una opción
+  </div>
+</div>

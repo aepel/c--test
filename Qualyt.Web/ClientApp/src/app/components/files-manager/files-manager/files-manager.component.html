@@ -1,0 +1,94 @@
+<div class="container">
+
+  <form #form="ngForm" (submit)="submitForm(form)" novalidate>
+    <div class="row">
+
+      <div class="col-md-12">
+        <div ng2FileDrop
+             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+             (fileOver)="fileOverBase($event)"
+             [uploader]="uploader"
+             class="well my-drop-zone">
+          Arrastre sus archivos aqui
+        </div>
+      </div>
+
+      <div class="col-md-12" style="margin-bottom: 40px">
+
+        <h3>Listado de archivos</h3>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th width="50%">Nombre</th>
+              <th>Tamaño</th>
+              <th>Progreso</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of uploader.queue">
+              <td><strong>{{ item?.file?.name }}</strong></td>
+              <td nowrap>{{ (item?.some?.fileSize?item?.some?.fileSize:item?.file?.size)/1024/1024 | number:'.2' }} MB</td>
+              <td>
+                <div class="progress" style="margin-bottom: 0;">
+                  <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                </div>
+              </td>
+              <td class="text-center">
+                <span *ngIf="item.isSuccess"><i class="fa fa-check"></i></span>
+                <span *ngIf="item.isCancel"><i class="fa fa-ban"></i></span>
+                <span *ngIf="item.isError"><i class="fa fa-remove"></i></span>
+              </td>
+              <td nowrap>
+                <div class="button-row">
+                  <button type="button" mat-raised-button
+                          (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="fa fa-upload"></span> Subir
+                  </button>
+                  <button type="button" mat-raised-button
+                          (click)="remove(item)">
+                    <span class="fa fa-times"></span> Eliminar
+                  </button>
+                  <button type="button" mat-raised-button
+                          (click)="download(item)">
+                    <span class="fa fa-download"></span> Descargar
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="col-md-12">
+          <div>
+            Progreso:
+            <div class="progress" style="">
+              <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+          <div class="button-row col-md-9">
+          </div>
+
+          <div class="col-md-3">
+            <button type="button" mat-raised-button color="primary"
+                    onclick="document.getElementById('fileToUpload').click()">
+              Seleccionar archivo <i class="fa fa-file"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="form-group">
+      <input id="fileToUpload" #fileToUpload type="file" ng2FileSelect [uploader]="uploader" (change)="changeInput()" style="display:none;" />
+    </div>
+  </form>
+</div>

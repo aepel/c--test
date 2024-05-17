@@ -1,0 +1,119 @@
+<app-info-treatment *ngIf="control" [treatmentId]="control.treatmentId"></app-info-treatment>
+
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Seguimiento</span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit()" #controlForm="ngForm" *ngIf="control && treatment" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <textarea matInput placeholder="Comentarios" type="text" class="underline" id="comments" required
+                    [(ngModel)]="control.comments" name="comments" #comments="ngModel"
+                    maxlength="1000"
+                    matTooltip="Recuerde no ingresar datos filiatorios ya que los comentarios son vistos por los laboratorios"
+                    matTooltipPosition="above"></textarea>
+        </mat-form-field>
+        <div  [hidden]="(!controlForm.submitted && comments.untouched) || comments.valid" class="alert alert-danger">
+          Los comentarios son requeridos
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <mat-select placeholder="Método de contacto" [(ngModel)]="control.contactMethod" #contactMethod="ngModel" id="contactMethod"
+                      name="contactMethod" required class="underline">
+            <mat-option *ngFor="let item of contactMethods" [value]="item.value">{{item.text}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div [hidden]="(!controlForm.submitted && contactMethod.untouched) || contactMethod.valid" class="alert alert-danger">
+          El método de contacto es requerido
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="control.type!=ControlType.end">
+        <app-formatted-datepicker [propertyName]="'nextControl'"
+                                  [required]="true"
+                                  [requiredError]="'La fecha del próximo seguimiento es requerida'"
+                                  [model]="control"
+                                  [placeholder]="'Fecha de próximo seguimiento'"
+                                  [form]="controlForm"
+                                  [min]="tomorrow">
+        </app-formatted-datepicker>
+      </div>
+
+      <div class="form-group" *ngIf="!(control.type==ControlType.normal && isPending)">
+        <mat-checkbox class="example-margin" name="followingTheTreatment"
+                          color="primary"
+                          [(ngModel)]="control.followingTheTreatment"
+                          [disabled]="control.type!=ControlType.normal">
+          ¿Está siguiendo el tratamiento?
+        </mat-checkbox>
+      </div>
+
+      <ng-container *ngIf="!(control.type==ControlType.normal && isPending) && control.followingTheTreatment">
+        <div class="form-group">
+          <app-formatted-datepicker [propertyName]="'treatmentStart'"
+                                    [required]="true"
+                                    [requiredError]="'La fecha de inicio del tratamiento es requerida'"
+                                    [model]="control"
+                                    [placeholder]="'Fecha de inicio del tratamiento'"
+                                    [form]="controlForm">
+          </app-formatted-datepicker>
+        </div>
+        <div class="form-group">
+          <app-formatted-datepicker [propertyName]="'nextTreatment'"
+                                    [required]="true"
+                                    [requiredError]="'La fecha del próximo tratamiento es requerida'"
+                                    [model]="control"
+                                    [placeholder]="'¿Cuándo es la fecha de su próximo tratamiento?'"
+                                    [form]="controlForm">
+          </app-formatted-datepicker>
+        </div>
+
+        <div class="form-group">
+          <app-formatted-datepicker [propertyName]="'nextDoctorVisit'"
+                                    [required]="true"
+                                    [requiredError]="'La fecha del próxima visita al médico es requerida'"
+                                    [model]="control"
+                                    [placeholder]="'¿Cuándo es la fecha de su próxima visita al médico?'"
+                                    [form]="controlForm">
+          </app-formatted-datepicker>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!(control.type==ControlType.normal && isPending) && !control.followingTheTreatment">
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <textarea matInput placeholder="Motivo" type="text" class="underline" id="treatmentInterruptReason" required
+                      [(ngModel)]="control.treatmentInterruptReason" name="treatmentInterruptReason" #treatmentInterruptReason="ngModel"
+                      maxlength="1000"></textarea>
+          </mat-form-field>
+          <div [hidden]="(!controlForm.submitted && treatmentInterruptReason.untouched) || treatmentInterruptReason.valid" class="alert alert-danger">
+            El motivo es requerido
+          </div>
+        </div>
+        <div class="form-group">
+          <app-formatted-datepicker [propertyName]="'treatmentInterruptDate'"
+                                    [required]="true"
+                                    [requiredError]="'La fecha de interrupción del tratamiento es requerida'"
+                                    [model]="control"
+                                    [placeholder]="'Fecha de interrupción del tratamiento'"
+                                    [form]="controlForm">
+          </app-formatted-datepicker>
+        </div>
+      </ng-container>
+
+      <a mat-raised-button class="btn btn-rounded hidden-print white"
+         [routerLink]="['/control-trackings']" [queryParams]="{ treatmentId: control.treatmentId} ">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button [disabled]="!controlForm.valid" class="btn btn-rounded btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="card" *ngIf="!verified && !accepted">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title"> Primero deberá completar datos suyos para verificar su identidad. Luego podrá leer, y en caso de corresponder, aceptar los términos y condiciones. </span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(patientForm.valid)" #patientForm="ngForm" [hidden]="!patient" autocomplete="off">
+
+      <div class="form-group">
+
+        <mat-form-field class="formFieldAncho">
+
+          <input matInput placeholder="Número de identificación (RUT, DNI)" type="text" class="underline"
+                 id="DniNumber" required
+                 [(ngModel)]="patient.idNumber" name="DniNumber" #dniNumber="ngModel"
+                 [pattern]="basePatient.country.idPattern">
+        </mat-form-field>
+        <div [hidden]="(!patientForm.submitted && dniNumber.untouched) || dniNumber.valid" class="alert alert-danger">
+          El número de identificación es requerido y debe seguir el formato del país seleccionado.
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Email" type="email" class="underline" id="email" required
+                 [(ngModel)]="patient.email" name="email" #email="ngModel"
+                 pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+        </mat-form-field>
+        <div [hidden]="(!patientForm.submitted && email.untouched) || email.valid" class="alert alert-danger">
+          El email es requerido y debe ser del tipo: ejemplo@ejemplo.abc
+        </div>
+      </div>
+      <button type="submit" mat-raised-button class="btn btn-rounded btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<div class="card" *ngIf="verified">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Términos y condiciones</span>
+  </div>
+  <div class="card-block">
+    <div class="form-group">
+      <quill-editor id="contentToConvert" [readOnly]="true"
+                    [(ngModel)]="text" name="text" [modules]="{toolbar: false}"></quill-editor>
+    </div>
+  </div>
+  <button type="button" (click)="accept()" mat-raised-button class="btn btn-rounded btn-primary hidden-print pull-right">
+    Acepto los términos y condiciones <i class="fa fa-check"></i>
+  </button>
+</div>
+
+<div class="card" *ngIf="accepted">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Muchas gracias</span>
+  </div>
+  <div class="card-block">
+    La descarga comenzará en breve...
+  </div>
+</div>
+
+
+<app-modal-basic #modalDefault>
+  <div class="app-modal-header">
+    <h4 class="modal-title">Términos y condiciones</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <p>Para quedar activo en el Programa {{basePatient.plan.name}}, por favor recuerde imprimir y firmar el documento, luego enviar al correo {{emailToReceive}}</p>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary waves-effect waves-light " (click)="confirm()">Aplicar</button>
+  </div>
+</app-modal-basic>

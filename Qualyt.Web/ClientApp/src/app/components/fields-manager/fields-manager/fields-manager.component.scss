@@ -1,0 +1,12 @@
+.margenDerecho {
+  margin-right: 10px;
+  float: left;
+}
+
+input[type=text], input[type=number] {
+  margin-bottom: 0 !important;
+}
+
+.heredarAncho, input, select {
+  width: inherit !important;
+}

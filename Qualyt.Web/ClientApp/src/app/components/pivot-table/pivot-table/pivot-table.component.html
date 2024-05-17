@@ -1,0 +1,15 @@
+<div class="page-body">
+  <div class="card">
+    <div class="card-block plan-card" *ngIf="data && data.length>0">
+      <ng-container *ngIf="exportButton">
+        <button class="btn btn-primary rounded" style="border-radius:4px;" type="button" (click)="exportPivotToExcel('pivot','datos_tabla_dinamica')">Exportar a excel <i class="fa fa-file-excel-o"></i></button>
+        <br /><br />
+      </ng-container>
+      <div id="pivot"></div>
+    </div>
+    <div class="card-block plan-card" *ngIf="data && data.length==0">
+      No existen seguimientos de los programas seleccionados entre las fechas dadas
+    </div>
+  </div>
+</div>
+

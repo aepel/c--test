@@ -1,0 +1,113 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Productos</span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm" *ngIf="product" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nombre" type="text" class="underline" id="name" required
+                 [(ngModel)]="product.name" name="name" #name="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && name.untouched) || name.valid" class="alert alert-danger">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <app-dropdown-with-filter [options]="productTypes" [(value)]="product.productType"
+                                optionLabel="text" placeholder="Tipo de producto" required="true"
+                                [form]="form" controlName="productType"
+                                optionValue="value" [disabled]="product.id">
+      </app-dropdown-with-filter>
+
+      <app-dropdown-with-filter [options]="laboratories" [(value)]="product.laboratoryId"
+                                optionLabel="name"
+                                placeholder="Laboratorio" required="true"
+                                [form]="form" controlName="laboratoryId">
+      </app-dropdown-with-filter>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Unidades del envase" type="number" class="underline" id="name" required
+                 [(ngModel)]="product.amount" name="amount" #amount="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && amount.untouched) || amount.valid" class="alert alert-danger">
+          Las unidades del envase son requeridas
+        </div>
+      </div>
+
+      <div [style.display]="product.productType==ProductType.device?'block':'none'">
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Tipo de dispositivo" type="text" class="underline" id="deviceType"
+                   [required]="product.productType==ProductType.device"
+                   [(ngModel)]="product.deviceType" name="deviceType" #deviceType="ngModel">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && deviceType.untouched) || deviceType.valid" class="alert alert-danger">
+            El tipo de dispositivo es requerido
+          </div>
+        </div>
+      </div>
+
+      <div [style.display]="product.productType==ProductType.medicine?'block':'none'">
+        <app-dropdown-with-filter [options]="dosageForms" [(value)]="product.form"
+                                  optionLabel="text" placeholder="Forma farmacéutica"
+                                  [required]="product.productType==ProductType.medicine"
+                                  [form]="form" controlName="dosageForm"
+                                  optionValue="value">
+        </app-dropdown-with-filter>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Presentación" type="number" class="underline" id="name"
+                                  [required]="product.productType==ProductType.medicine"
+                   [(ngModel)]="product.variation" name="variation" #variation="ngModel">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && variation.untouched) || variation.valid" class="alert alert-danger">
+            La presentación es requerida
+          </div>
+        </div>
+
+        <app-dropdown-with-filter [options]="variationUnits" [(value)]="product.variationUnit"
+                                  optionLabel="text" placeholder="Medida de la presentación"
+                                  [required]="product.productType==ProductType.medicine"
+                                  [form]="form" controlName="variationUnit"
+                                  optionValue="value">
+        </app-dropdown-with-filter>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Dosis diaria definida (DDD)" type="text" class="underline" id="name"
+                                  [required]="product.productType==ProductType.medicine"
+                   [(ngModel)]="product.definedDailyDose" name="definedDailyDose" #definedDailyDose="ngModel">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && definedDailyDose.untouched) || definedDailyDose.valid" class="alert alert-danger">
+            La dosis diaria definida es requerida
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Principio activo" type="text" class="underline" id="activeSubstance"
+                                  [required]="product.productType==ProductType.medicine"
+                   [(ngModel)]="product.activeSubstance" name="activeSubstance" #activeSubstance="ngModel">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && activeSubstance.untouched) || activeSubstance.valid" class="alert alert-danger">
+            El principio activo es requerido
+          </div>
+        </div>
+      </div>
+
+      <app-fields-manager [campos]="product.fields" *ngIf="product"></app-fields-manager>
+      <br /><br />
+      <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/products']">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button class="btn btn-rounded¿ btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

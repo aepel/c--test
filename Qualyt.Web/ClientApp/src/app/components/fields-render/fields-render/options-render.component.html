@@ -1,0 +1,10 @@
+<form [formGroup]="_formGroup">
+  <mat-form-field class="formFieldAncho">
+    <mat-select [placeholder]="data.name" [(ngModel)]="data.value"
+              [required]="data.required" formControlName="{{data.id}}"
+                 (selectionChange)="selection($event)" [disabled]="disabled">
+      <mat-option *ngFor="let item of data.options" [value]="item.text">{{item.text}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+</form>

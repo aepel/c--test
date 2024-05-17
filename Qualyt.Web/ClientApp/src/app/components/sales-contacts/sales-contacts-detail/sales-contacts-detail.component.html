@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Representante</span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(form.valid)" #form="ngForm" [hidden]="!salesContact" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nombre" type="text" class="underline" id="name" required
+                 [(ngModel)]="salesContact.name" name="name" #name="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && name.untouched) || name.valid" class="alert alert-danger">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Apellido" type="text" class="underline" id="surname" required
+                 [(ngModel)]="salesContact.surname" name="surname" #surname="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!form.submitted && surname.untouched) || surname.valid" class="alert alert-danger">
+          El apellido es requerido
+        </div>
+      </div>
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Apellido materno" type="text" class="underline" id="mothersSurname"
+                 [(ngModel)]="salesContact.mothersSurname" name="mothersSurname" #mothersSurname="ngModel">
+        </mat-form-field>
+      </div>
+
+      <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/sales-contacts']">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button class="btn btn-rounded btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

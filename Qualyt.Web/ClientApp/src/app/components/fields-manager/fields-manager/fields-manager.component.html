@@ -1,0 +1,116 @@
+<div class="well clearfix">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Agregar campo</legend>
+    <form *ngIf="campoNuevo" class="form-inline" (ngSubmit)="onSubmit()" #campoForm="ngForm" style="display:block" autocomplete="off">
+      <div class="form-group margenDerecho col-md-4" style="margin-right:20px;">
+        <div class="heredarAncho">
+          <label>Nombre</label>
+          <input type="text" class="form-control" [(ngModel)]="campoNuevo.name" name="campoNuevo.name" required #nombre="ngModel" />
+        </div>
+      </div>
+      <div class="form-group margenDerecho col-md-4">
+        <div class="heredarAncho">
+          <label>Campo padre</label>
+          <select type="text" class="form-control" [(ngModel)]="campoNuevo.parentId" name="campoNuevo.parentId" [disabled]="!(posiblesParents.length>0)">
+            <option *ngFor="let c of posiblesParents" value="{{c.id}}">{{c.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group margenDerecho" style="float:right;margin-top: 27px;margin-right:22px;">
+        <div class="heredarAncho" style="display:contents;">
+          <input type="checkbox" [(ngModel)]="campoNuevo.required" name="campoNuevo.required" class="form-control" id="required" /><label for="required">Obligatorio</label>
+        </div>
+      </div>
+      <div class="form-group margenDerecho col-md-2" style="clear:left">
+        <div class="heredarAncho">
+          <label>Tipo</label>
+          <select type="text" class="form-control" [(ngModel)]="campoNuevo.type" name="campoNuevo.type"
+                  required #tipo="ngModel">
+            <option *ngFor="let item of TiposCampo" [value]="item.value">{{item.text}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group margenDerecho col-md-3"
+                 [hidden]="campoNuevo.type!=FieldType.numeric">
+        <div class="heredarAncho">
+          <label>Mínimo</label>
+          <input type="number" class="form-control" name="campoNuevo.minimum" [(ngModel)]="campoNuevo.minimum"/>
+        </div>
+      </div>
+      <div class="form-group margenDerecho col-md-3"
+                 [hidden]="campoNuevo.type!=FieldType.numeric">
+        <div class="heredarAncho">
+          <label>Máximo</label>
+          <input type="number" class="form-control" [(ngModel)]="campoNuevo.maximum" name="campoNuevo.maximum" />
+        </div>
+      </div>
+      <div class="form-group margenDerecho col-md-3"
+                 [hidden]="campoNuevo.type!=FieldType.simpleSelect" >
+        <div class="heredarAncho">
+          <label>Opciones separadas por coma (,)</label>
+          <input type="text" class="form-control" [(ngModel)]="options" name="options"/>
+        </div>
+      </div>
+      <button style="float:right;margin-top:22px;" type="submit" class="btn btn-primary" [disabled]="!campoForm.valid"><i class="glyphicon glyphicon-plus"></i>&nbsp;Agregar campo</button>
+    </form>
+  </fieldset>
+</div>
+
+
+<div class="mat-app-background">
+
+  <div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="parentId">
+        <mat-header-cell *matHeaderCellDef> Campo padre </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.parentName|nullable}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo">
+        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{FieldType[FieldType[row.type]+'Description']}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="minimo">
+        <mat-header-cell *matHeaderCellDef> Mínimo </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.minimum|nullable}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="maximo">
+        <mat-header-cell *matHeaderCellDef> Máximo </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.maximum|nullable}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="obligatorio">
+        <mat-header-cell *matHeaderCellDef> Obligatorio </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.required|boolean}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="orden">
+        <mat-header-cell *matHeaderCellDef> Orden </mat-header-cell>
+        <mat-cell *matCellDef="let row;let i=index">
+          <a *ngIf="i!=0" class="btn btn-xs" (click)="subirCampo(row.id)"><i class="material-icons">arrow_upward</i></a>
+          <a *ngIf="i<campos.length-1" class="btn btn-xs" (click)="bajarCampo(row.id)"><i class="material-icons">arrow_downward</i></a>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let row;let i=index">
+          <a class="btn btn-xs delete-record" (click)="removeRow(row.id)"><i class="material-icons">delete</i></a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  </div>
+</div>

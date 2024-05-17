@@ -1,0 +1,1 @@
+{"version":3,"file":"plan-product.model.js","sourceRoot":"","sources":["plan-product.model.ts"],"names":[],"mappings":";;AAIA;IACE,qBAAY,OAAO,EAAE,UAAU,EAAE,QAAS;QACxC,IAAI,CAAC,MAAM,GAAG,OAAO,CAAC;QACtB,IAAI,CAAC,SAAS,GAAG,UAAU,CAAC;QAC5B,IAAI,CAAC,OAAO,GAAG,QAAQ,CAAC;IAC1B,CAAC;IAIH,kBAAC;AAAD,CAAC,AATD,IASC;AATY,kCAAW"}

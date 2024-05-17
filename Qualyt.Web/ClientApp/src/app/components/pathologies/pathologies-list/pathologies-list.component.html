@@ -1,0 +1,24 @@
+<app-datatable [service]="service"
+               [columns]="columns"
+               [actionsRoute]="'pathologies'"
+               [editProperty]="'active'"
+               [delete]="true"
+               [edit]="true"
+               (deleted)="deleteCatcher($event)" #dataTable>
+</app-datatable>
+<app-modal-basic #modalDefault>
+  <div class="app-modal-header">
+    <h4 class="modal-title">¿Borrar Patologías?</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <h5>¿Está seguro de borrar la patología?</h5>
+    <p>Recuerde que si la patología tiene tratamientos o pacientes asociados, la operacion no será posible.</p>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default waves-effect" (click)="modalDefault.hide()">Cancelar</button> &nbsp;
+    <button type="button" class="btn btn-primary waves-effect waves-light " (click)="confirmDeleted(deletedid)">Aplicar</button>
+  </div>
+</app-modal-basic>

@@ -1,0 +1,19 @@
+<div *ngIf="alerts && alerts.length>0" (clickOutside)="notificationOutsideClick('live')" [ngClass]="liveNotificationClass" (click)="toggleLiveNotification()">
+  <a href="javascript:">
+    <i class="ti-bell"></i>
+    <span class="badge bg-c-pink"></span>
+  </a>
+  <ul [@notificationBottom]="liveNotification" class="show-notification notification-list">
+    <li>
+      <h6>Notificaciones</h6>
+    </li>
+    <li *ngFor="let alert of alerts">
+      <div class="media">
+        <a class="media-body" [routerLink]="alert.route" [queryParams]="alert.params">
+          <h5 class="notification-user">{{alert.title}}</h5>
+          <p class="notification-msg">{{alert.description}}</p>
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>

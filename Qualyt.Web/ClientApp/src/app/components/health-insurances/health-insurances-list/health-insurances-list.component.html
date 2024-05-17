@@ -1,0 +1,25 @@
+<app-datatable [service]="service"
+               [columns]="columns"
+               [actionsRoute]="'health-insurances'"
+               [editProperty]="'active'"
+               [edit]="true"
+               [delete]="true"
+               (deleted)="deleteCatcher($event)" #dataTable>
+</app-datatable>
+<app-modal-basic #modalDefault>
+  <div class="app-modal-header">
+    <h4 class="modal-title">¿Borrar Seguros Médicos?</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <h5>¿Está seguro de borrar el seguro médico?</h5>
+    <!--<p>Recuerde que si el paciente tiene historia, la operacion no sera posible.</p>-->
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default waves-effect" (click)="modalDefault.hide()">Cancelar</button> &nbsp;
+    <button type="button" class="btn btn-primary waves-effect waves-light " (click)="confirmDeleted(deletedid)">Confirmar</button>
+  </div>
+</app-modal-basic>
+

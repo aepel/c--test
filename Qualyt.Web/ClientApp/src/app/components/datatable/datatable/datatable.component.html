@@ -1,0 +1,55 @@
+
+<div class="card">
+  <div class="card-block">
+
+    <div class="example-header">
+      <mat-form-field>
+        <input #input matInput placeholder="Filtrar">
+      </mat-form-field>
+
+      <h5 class="card-inverse card-title botonCreacion">
+        <a *ngIf="!notCreate" class="botonCrear" [routerLink]="['/'+actionsRoute+'/detail']" [queryParamsHandling]="inheritParamsOnCreate?'merge':''">
+          <span class="botonCrearTexto">Crear</span><i class="material-icons">add_circle_outline</i>
+        </a>
+      </h5>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort (matSortChange)="update()">
+
+      <ng-container *ngFor="let col of columns" [matColumnDef]="col.name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{col.displayedName}} </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="setColor(row)">
+          <span class="mobile-label">{{col.displayedName}}</span>
+          {{col["datePipe"] ? ( ((row|nestedProperty:col.name) | date:col["datePipe"])|nullable )  : (col["booleanPipe"] ? ( (row|nestedProperty:col.name) | boolean ) : ((row|nestedProperty:col.name)|nullable ) )}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="mobile-label">Acciones</span>
+          <ng-container *ngIf="edit">
+            <a matTooltip="Editar" *ngIf="!editProperty || (editProperty && row[editProperty])" [routerLink]="['/'+actionsRoute+'/detail']" [queryParams]="{ id: row.id} " queryParamsHandling="merge"><i class="material-icons">edit</i></a>
+          </ng-container>
+          <ng-container *ngIf="delete">
+            <a matTooltip="Borrar" *ngIf="!deleteProperty || (deleteProperty && row[deleteProperty])" href="javascript:;" (click)="remove( row.id )"><i class="material-icons">delete</i></a>
+          </ng-container>
+          <ng-container *ngFor="let act of actions">
+            <a [matTooltip]="act.tooltip" *ngIf="!act.conditionName || row[act.conditionName]" (click)="act.idParameter?act.catcher(row.id, router, service, alertService,self):act.catcher()" href="javascript:;"><i class="material-icons">{{act.icon}}</i></a>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" >
+      </mat-row>
+    </mat-table>
+    <mat-paginator (page)="update()"
+                   showFirstLastButtons>
+    </mat-paginator>
+
+    <a mat-raised-button class="btn btn-rounded hidden-print white" *ngIf="backButtonRoute"
+       [routerLink]="[backButtonRoute]">
+      <i class="fa fa-chevron-left"></i> Volver
+    </a>
+  </div>
+</div>

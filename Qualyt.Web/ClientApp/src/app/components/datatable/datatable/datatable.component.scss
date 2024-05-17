@@ -1,0 +1,38 @@
+.mobile-label {
+  display: none;
+}
+
+@media(max-width: 950px) {
+  .mobile-label {
+    width: 80px;
+    display: inline-block !important;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none !important;
+  }
+
+  .mat-row {
+    flex-direction: column;
+    align-items: flex-start !important;
+    padding: 15px 24px !important;
+  }
+}
+
+
+
+.botonCrearTexto {
+  float: left;
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+a.botonCrear {
+  float: right;
+  color: #66adff;
+}
+.botonCreacion {
+  float: right;
+}
+

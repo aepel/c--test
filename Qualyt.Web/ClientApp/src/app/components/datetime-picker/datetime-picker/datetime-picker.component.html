@@ -1,0 +1,9 @@
+<div class="form-group">
+  <p-calendar [(ngModel)]="date" [showTime]="true" #control="ngModel" [minDate]="min" [maxDate]="max"
+              name="date" [placeholder]="placeholder" [disabled]="disabled" dateFormat="d/m/y" hourFormat="12"
+              appendTo="body" readonlyInput="true" [locale]="es" [style]="{'width':'100%'}"
+              [inputStyle]="{'width':'100%'}" [required]="required" (onSelect)="onSelectChange()"></p-calendar>
+  <div [hidden]="(!required) || (!form.submitted && control.untouched) || control.valid" class="alert alert-danger">
+    Debe seleccionar una fecha
+  </div>
+</div>

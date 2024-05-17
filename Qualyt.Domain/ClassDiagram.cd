@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Qualyt.Domain.Models.Location.Place" Collapsed="true">
+    <Position X="7.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAIAAAABAAAARAAAABA=</HashCode>
+      <FileName>Models\Location\Place.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Qualyt.Domain.Models.Location.Area" Collapsed="true">
+    <Position X="9.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Location\Area.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DoctorAreas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Qualyt.Domain.Models.Reports.MedicalExpertiseReport" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.5" Y="5.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAACAAAAIAAAAAAAABAAAAAAAAAAgAAAAMAIAE=</HashCode>
+      <FileName>Models\Reports\MedicalExpertiseReport.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualyt.Domain.Models.ApplicationRole" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAMCAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAE=</HashCode>
+      <FileName>Models\Authentication\ApplicationRole.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualyt.Domain.Models.ApplicationUser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAMAAAAAAAAAAAAAEAAAAQAgAAAAAAAgAAAAIAAAE=</HashCode>
+      <FileName>Models\Authentication\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualyt.Domain.Models.Insurance.MedicalInsurance" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAAAAICAAE=</HashCode>
+      <FileName>Models\Insurance\MedicalInsurance.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MedicalExpertises" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualyt.Domain.Models.Expertise.Doctor" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAQABAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Models\Expertise\Doctor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Speciality" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="DoctorAreas" />
+      <Property Name="MedicalExpertises" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualyt.Domain.Models.Expertise.MedicalExpertise" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="4.5" Width="2.25" />
+    <AssociationLine Name="State" Type="Qualyt.Domain.Models.Expertise.Enums.MedicalExpertiseState" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="10.75" Y="4.571" />
+        <Point X="10.5" Y="4.571" />
+        <Point X="10.5" Y="4.25" />
+        <Point X="10.781" Y="4.25" />
+        <Point X="10.781" Y="3.812" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACEAIAAgAAAAAIEAAAQAAAAAACAAQBIlIABQIADQE=</HashCode>
+      <FileName>Models\Expertise\MedicalExpertise.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Patient" />
+      <Property Name="MedicalInsurance" />
+      <Property Name="MedicalExpertiseReport" />
+      <Property Name="Place" />
+      <Property Name="Area" />
+      <Property Name="Doctor" />
+      <Property Name="State" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="NotifiedDoctors" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualyt.Domain.Models.Expertise.Patient" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Expertise\Patient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Qualyt.Domain.Models.AssociativeClasses.DoctorArea" Collapsed="true">
+    <Position X="10.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAIAAAAQAAAAA=</HashCode>
+      <FileName>Models\AssociativeClasses\DoctorArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Qualyt.Domain.Models.AssociativeClasses.MedicalExpertiseDoctor" Collapsed="true">
+    <Position X="12.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAACAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AssociativeClasses\MedicalExpertiseDoctor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Doctor" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="Qualyt.Domain.Models.Interfaces.IAuditableEntity" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAAAE=</HashCode>
+      <FileName>Models\Interfaces\IAuditableEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Qualyt.Domain.Models.Expertise.Enums.MedicalExpertiseState" Collapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABAQAAAACAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAEAA=</HashCode>
+      <FileName>Models\Expertise\Enums\MedicalExpertiseState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Qualyt.Domain.Models.Expertise.Enums.Speciality" Collapsed="true">
+    <Position X="16.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Expertise\Enums\Speciality.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

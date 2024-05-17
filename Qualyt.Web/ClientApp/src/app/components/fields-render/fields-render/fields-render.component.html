@@ -1,0 +1,13 @@
+
+<form [formGroup]="_formGroup">
+    <div id="fields" *ngIf="parentFields">
+      <span *ngFor="let c of parentFields">
+        <app-checkbox-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==0" [disabled]="disabled"></app-checkbox-render>
+        <app-text-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==2" [disabled]="disabled"></app-text-render>
+        <app-numeric-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==3" [disabled]="disabled"></app-numeric-render>
+        <app-date-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==4" [disabled]="disabled"></app-date-render>
+        <app-options-render [_formGroup]="_formGroup" [data]="c" *ngIf="c.type==7" [disabled]="disabled"></app-options-render>
+      </span>
+    </div>
+</form>
+

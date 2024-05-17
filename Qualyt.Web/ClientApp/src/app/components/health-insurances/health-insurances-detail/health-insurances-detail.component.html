@@ -1,0 +1,36 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Seguro médico</span>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(healthForm.valid)" #healthForm="ngForm" [hidden]="!healthInsurance" autocomplete="off">
+
+      <div class="form-group">
+        <mat-form-field class="formFieldAncho">
+          <input matInput placeholder="Nombre" type="text" class="underline" id="name" required
+                 [(ngModel)]="healthInsurance.name" name="name" #name="ngModel">
+        </mat-form-field>
+        <div [hidden]="(!healthForm.submitted && name.untouched) || name.valid" class="alert alert-danger">
+          El nombre es requerido
+        </div>
+      </div>
+
+      <app-dropdown-with-filter [options]="countries" [(value)]="healthInsurance.countryId"
+                                optionLabel="name"
+                                placeholder="País" required="true"
+                                [form]="healthForm" controlName="countryId">
+      </app-dropdown-with-filter>
+
+      <app-fields-manager [campos]="healthInsurance.fields" *ngIf="healthInsurance"></app-fields-manager>
+      <br /><br />
+
+      <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/health-insurances']">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button class="btn btn-rounded¿ btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="">
+  <div class="page-header card">
+    <div class="card-block">
+      <span><h5 class="m-b-10">Tratamiento</h5></span>
+      <p class="text-muted m-b-10">Siga los pasos para crear un nuevo tratamiento</p>
+    </div>
+  </div>
+</div>
+
+<mat-horizontal-stepper linear="true" #stepper *ngIf="treatment">
+  <mat-step [stepControl]="form">
+    <form #form="ngForm" autocomplete="off">
+      <ng-template matStepLabel>Información básica</ng-template>
+      <app-treatment-basic-info [treatment]="treatment" [form]="form" [planId]="planId" [readonly]="treatment.state>TreatmentState.pending" >
+      </app-treatment-basic-info>
+      <div>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+    <div [hidden]="treatment" class="alert alert-danger">
+      Hubo un problema
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup" autocomplete="off">
+      <ng-template matStepLabel>Datos referentes a la patología</ng-template>
+      <app-fields-render *ngIf="treatment.pathologyFields" [fields]="treatment.pathologyFields"></app-fields-render>
+      <div>
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup" autocomplete="off">
+      <ng-template matStepLabel>Datos referentes al producto</ng-template>
+      <app-fields-render *ngIf="treatment.productFields" [fields]="treatment.productFields"></app-fields-render>
+      <div>
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button mat-button matStepperNext (click)="last()">Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Listo</ng-template>
+    <app-treatment-summary [treatment]="treatment" *ngIf="treatment && lastStep" [disabled]="true" [noCard]="true">
+
+    </app-treatment-summary>
+    <div>
+      <button mat-button matStepperPrevious>Anterior</button>
+      <button mat-button (click)="onSubmit()">Confirmar</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+
+
+
+<app-modal-basic #modal>
+  <div class="app-modal-header">
+    <h4 class="modal-title">¿Cargar seguimiento?</h4>
+    <button type="button" class="close basic-close" (click)="modal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <p>¿Desea continuar con la carga de un seguimiento?</p>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-default waves-effect" (click)="cancel()">Cancelar</button> &nbsp;
+    <button type="button" class="btn btn-primary waves-effect waves-light " (click)="newControlTracking()">Continuar</button>
+  </div>
+</app-modal-basic>

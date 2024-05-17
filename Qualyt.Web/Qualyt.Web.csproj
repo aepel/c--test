@@ -1,0 +1,212 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <Description>ASPNET Core 2.1 - Angular6 startup template for Quick Application Development</Description>
+    <Copyright>Copyright © 2018 www.ebenmonney.com</Copyright>
+    <PackageProjectUrl>https://github.com/emonney/QuickApp</PackageProjectUrl>
+    <Company>Qualyt</Company>
+    <Version>2.6.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.RouteAnalyzer" Version="0.5.1" />
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="FluentValidation" Version="8.0.100" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.6.104" />
+    <PackageReference Include="Geocoding.Core" Version="4.0.1" />
+    <PackageReference Include="geocoding.NetCore.APIs" Version="1.0.0" />
+    <PackageReference Include="MailKit" Version="2.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.12" />
+    <PackageReference Include="Node.js" Version="5.3.0" />
+    <PackageReference Include="OpenIddict" Version="2.0.0-rc3-final" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0-rc3-final" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
+    <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+    <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.42" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\config\**" />
+    <Compile Remove="ClientApp\src\app\modules\**" />
+    <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\config\**" />
+    <Content Remove="ClientApp\src\app\modules\**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\app\config\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\modules\**" />
+    <None Remove="ClientApp\src\app\config\**" />
+    <None Remove="ClientApp\src\app\modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DesignTimeDbContextFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\components\patients\patients-detail\patients-detail.resolver.ts" />
+    <None Remove="ClientApp\src\app\models\alert.model.ts" />
+    <None Remove="ClientApp\src\app\models\application-user.model.ts" />
+    <None Remove="ClientApp\src\app\models\attention-place.model.ts" />
+    <None Remove="ClientApp\src\app\models\clinical-history.model.ts" />
+    <None Remove="ClientApp\src\app\models\control-tracking.model.ts" />
+    <None Remove="ClientApp\src\app\models\country.model.ts" />
+    <None Remove="ClientApp\src\app\models\dashboard-filter.model.ts" />
+    <None Remove="ClientApp\src\app\models\datatable-column.model.ts" />
+    <None Remove="ClientApp\src\app\models\datatable-response.model.ts" />
+    <None Remove="ClientApp\src\app\models\device.model.ts" />
+    <None Remove="ClientApp\src\app\models\doctor-specialty.model.ts" />
+    <None Remove="ClientApp\src\app\models\doctor.model.ts" />
+    <None Remove="ClientApp\src\app\models\enums.model.ts" />
+    <None Remove="ClientApp\src\app\models\field.model.ts" />
+    <None Remove="ClientApp\src\app\models\health-insurance-doctor.model.ts" />
+    <None Remove="ClientApp\src\app\models\health-insurance.model.ts" />
+    <None Remove="ClientApp\src\app\models\laboratory.model.ts" />
+    <None Remove="ClientApp\src\app\models\laboratoryUser.model.ts" />
+    <None Remove="ClientApp\src\app\models\location.model.ts" />
+    <None Remove="ClientApp\src\app\models\medicine.model.ts" />
+    <None Remove="ClientApp\src\app\models\nurse.model.ts" />
+    <None Remove="ClientApp\src\app\models\pathology.model.ts" />
+    <None Remove="ClientApp\src\app\models\patient-pathology.model.ts" />
+    <None Remove="ClientApp\src\app\models\patient-terms-and-conditions.model.ts" />
+    <None Remove="ClientApp\src\app\models\patient.model.ts" />
+    <None Remove="ClientApp\src\app\models\pivot-table-data.model.ts" />
+    <None Remove="ClientApp\src\app\models\plan-pathology.model.ts" />
+    <None Remove="ClientApp\src\app\models\plan-product.model.ts" />
+    <None Remove="ClientApp\src\app\models\plan.model.ts" />
+    <None Remove="ClientApp\src\app\models\product.model.ts" />
+    <None Remove="ClientApp\src\app\models\query-parameters.model.ts" />
+    <None Remove="ClientApp\src\app\models\sales-contact.model.ts" />
+    <None Remove="ClientApp\src\app\models\terms-and-conditions.model.ts" />
+    <None Remove="ClientApp\src\app\models\treatment.model.ts" />
+    <None Remove="ClientApp\src\app\models\user-country.model.ts" />
+    <None Remove="ClientApp\src\app\models\user-plan.model.ts" />
+    <None Remove="ClientApp\src\app\services\attention-places.service.ts" />
+    <None Remove="ClientApp\src\app\services\base.service.ts" />
+    <None Remove="ClientApp\src\app\services\countries.service.ts" />
+    <None Remove="ClientApp\src\app\services\doctor-specialties.service.ts" />
+    <None Remove="ClientApp\src\app\services\doctors.service.ts" />
+    <None Remove="ClientApp\src\app\services\health-insurance.service.ts" />
+    <None Remove="ClientApp\src\app\services\laboratories.service.ts" />
+    <None Remove="ClientApp\src\app\services\notifications.service.ts" />
+    <None Remove="ClientApp\src\app\services\nurses.service.ts" />
+    <None Remove="ClientApp\src\app\services\pathologies.service.ts" />
+    <None Remove="ClientApp\src\app\services\patients.service.ts" />
+    <None Remove="ClientApp\src\app\services\plans.service.ts" />
+    <None Remove="ClientApp\src\app\services\products.service.ts" />
+    <None Remove="ClientApp\src\app\services\sales-contacts.service.ts" />
+    <None Remove="ClientApp\src\app\services\terms-and-conditions.service.ts" />
+    <None Remove="ClientApp\src\app\services\trackings.service.ts" />
+    <None Remove="ClientApp\src\app\services\treatments.service.ts" />
+    <None Remove="ClientApp\src\app\services\users.service.ts" />
+    <None Remove="ClientApp\src\typing.d.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Qualyt.Data\Qualyt.Data.csproj" />
+    <ProjectReference Include="..\Qualyt.Services\Qualyt.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\patients\patients-detail\patients-detail.resolver.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\application-user.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\alert.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\laboratoryUser.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\pivot-table-data.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\dashboard-filter.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\plan-product.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\plan-pathology.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\plan.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\device.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\medicine.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\sales-contact.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\nurse.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\enums.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\country.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\doctor-specialty.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\datatable-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\datatable-column.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\attention-place.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\laboratory.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\clinical-history.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\product.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user-plan.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user-country.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\health-insurance.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\doctor.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\location.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\health-insurance-doctor.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\patient-pathology.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\terms-and-conditions.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\patient-terms-and-conditions.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\patient.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\control-tracking.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\treatment.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\query-parameters.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\field.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\pathology.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\notifications.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\doctor-specialties.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\health-insurance.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\doctors.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\countries.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\laboratories.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\attention-places.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\users.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\plans.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\sales-contacts.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\nurses.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\products.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\patients.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\terms-and-conditions.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\treatments.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\pathologies.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\base.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\typing.d.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <!--<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />-->
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">    
+   
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod --aot" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod --aot" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    
+   
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>

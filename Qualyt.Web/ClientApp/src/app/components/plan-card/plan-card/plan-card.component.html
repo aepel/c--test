@@ -1,0 +1,19 @@
+<div class="card order-card" [style.background-color]="plan.laboratory.color">
+  <div class="card-block plan-card">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="centered-content">
+          <img *ngIf="plan.laboratory.iconBytes" _ngcontent-c2="" class="img-fluid card-icon centered-content" [src]="'data:image/png;base64,'+plan.laboratory.iconBytes">
+        </div>
+      </div>
+      <div class="col-md-8">
+        <h4 class="m-b-20">
+          <span style="mix-blend-mode:difference;">{{plan.name}}</span>
+        </h4>
+        <p class="m-b-0" style="mix-blend-mode:difference;">Laboratorio<span class="f-right">{{plan.laboratory?plan.laboratory.name:''}}</span></p>
+        <br />
+        <p class="m-b-0" style="mix-blend-mode:difference;">País<span class="f-right">{{plan.country?plan.country.name:''}}</span></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,489 @@
+<div class="card">
+  <div class="card-header card-info card-inverse">
+    <span class="card-title">Paciente</span>
+    <a mat-raised-button class="btn btn-rounded hidden-print white" (click)="export()">
+      <i class="fa fa-file-word-o"></i> Exportar
+    </a>
+  </div>
+  <div class="card-block">
+    <form (ngSubmit)="onSubmit(form.valid)" #form="ngForm" *ngIf="patient && patient.clinicalHistory" autocomplete="off">
+      <div id="contentToConvert">
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Nombre" type="text" class="underline exportable" id="name" required
+                   [(ngModel)]="patient.name" name="name" #name="ngModel"
+                   disabled="disabled">
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Apellido" type="text" class="underline exportable" id="surname" required
+                   [(ngModel)]="patient.surname" name="surname" #surname="ngModel"
+                   disabled="disabled">
+          </mat-form-field>
+        </div>
+
+        <div class="form-group" *ngIf="patient.mothersSurname">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Apellido materno" type="text" class="underline exportable" id="mothersSurname"
+                   [(ngModel)]="patient.mothersSurname" name="mothersSurname" #mothersSurname="ngModel"
+                   disabled="disabled">
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <mat-select placeholder="Sexo" [(ngModel)]="patient.gender" #sexo="ngModel" id="sexo"
+                        name="sexo" required class="underline exportable" disabled="disabled">
+              <mat-option *ngFor="let item of genders" [value]="item.value">{{item.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <app-formatted-datepicker [propertyName]="'birthDate'"
+                                    [model]="patient"
+                                    [placeholder]="'Fecha de nacimiento'"
+                                    [form]="form"
+                                    [disabled]="true"
+                                    classes="exportable">
+          </app-formatted-datepicker>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Estatura (cm)" type="number" class="underline exportable" id="height"
+                   [(ngModel)]="patient.clinicalHistory.height" name="height" #height="ngModel"
+                   required onkeydown="javascript: return event.keyCode == 69 ? false : true" pattern="[0-9]{0,3}">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && height.untouched) || height.valid" class="alert alert-danger">
+            La estatura es requerida, debe ser positiva y tener un máximo de 3 dígitos
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Peso (kg)" type="number" class="underline exportable" id="weight"
+                   [(ngModel)]="patient.clinicalHistory.weight" name="weight" #weight="ngModel"
+                   required onkeydown="javascript: return event.keyCode == 69 ? false : true" pattern="[0-9]{0,3}">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && weight.untouched) || weight.valid" class="alert alert-danger">
+            El peso es requerido, debe ser positivo y tener un máximo de 3 dígitos
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <mat-select placeholder="Vive con" [(ngModel)]="patient.clinicalHistory.livesWith" #livesWith="ngModel" id="livesWith"
+                        name="livesWith" required class="underline exportable">
+              <mat-option *ngFor="let item of livesWiths" [value]="item.value">{{item.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && livesWith.untouched) || livesWith.valid" class="alert alert-danger">
+            Este dato es requerido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <mat-select placeholder="Nivel escolar" [(ngModel)]="patient.clinicalHistory.schoolLevel" #schoolLevel="ngModel" id="schoolLevel"
+                        name="schoolLevel" required class="underline exportable">
+              <mat-option *ngFor="let item of schoolLevels" [value]="item.value">{{item.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && schoolLevel.untouched) || schoolLevel.valid" class="alert alert-danger">
+            El nivel escolar es requerido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Profesión" type="text" class="underline exportable" id="profession" required
+                   [(ngModel)]="patient.clinicalHistory.profession" name="profession" #profession="ngModel">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && profession.untouched) || profession.valid" class="alert alert-danger">
+            La profesión es requerida
+          </div>
+        </div>
+
+        <p class="exportable">Antecedentes médicos</p>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <mat-select placeholder="Grupo sanguíneo" [(ngModel)]="patient.clinicalHistory.bloodType" #bloodType="ngModel" id="bloodType"
+                        name="bloodType" required class="underline exportable">
+              <mat-option *ngFor="let item of bloodTypes" [value]="item.value">{{item.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && bloodType.untouched) || bloodType.valid" class="alert alert-danger">
+            El grupo sanguíneo es requerido
+          </div>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <mat-select placeholder="Factor Rh" [(ngModel)]="patient.clinicalHistory.rhFactor" #rhFactor="ngModel" id="rhFactor"
+                        name="rhFactor" required class="underline exportable">
+              <mat-option *ngFor="let item of rhFactors" [value]="item.value">{{item.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && rhFactor.untouched) || rhFactor.valid" class="alert alert-danger">
+            El factor Rh es requerido
+          </div>
+        </div>
+
+        <app-checkbox-with-text [booleanPropertyName]="'inMedicalTreatment'"
+                                [booleanPlaceholder]="'¿Está bajo tratamiento médico?'"
+                                [stringPropertyName]="'medicalTreatmentDetail'"
+                                [stringPlaceholder]="'¿Cuál?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'allergic'"
+                                [booleanPlaceholder]="'¿Es usted alergico a algún medicamento u otra sustancia?'"
+                                [stringPropertyName]="'allergyDetail'"
+                                [stringPlaceholder]="'¿Cuál?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'hemorrhage'"
+                                [booleanPlaceholder]="'¿Ha tenido alguna vez hemorragia excesiva que requirió tratamiento especial?'"
+                                [stringPropertyName]="'hemorrhageDetail'"
+                                [stringPlaceholder]="'Detalle'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'seizures'"
+                                [booleanPlaceholder]="'¿Padece de convulsiones?'"
+                                [stringPropertyName]="'seizuresDetail'"
+                                [stringPlaceholder]="'Detalle'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'smoker'"
+                                [booleanPlaceholder]="'¿Fuma?'"
+                                [stringPropertyName]="'smokerDetail'"
+                                [stringPlaceholder]="'Detalle'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'practiceSports'"
+                                [booleanPlaceholder]="'¿Practica deporte?'"
+                                [stringPropertyName]="'sportsDetail'"
+                                [stringPlaceholder]="'¿Cuál?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <p class="exportable">
+          Padece o ha padecido alguna de estas enfermedades
+        </p>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.rheumatoidArthritis"
+                            name="patient.clinicalHistory.rheumatoidArthritis">
+            Artritis Reumatoidea
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.kidneyProblems"
+                            name="patient.clinicalHistory.kidneyProblems">
+            Problemas al riñon
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.asthma"
+                            name="patient.clinicalHistory.asthma">
+            Asma
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.arterialHypertension"
+                            name="patient.clinicalHistory.arterialHypertension">
+            Hipertensión arterial
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.mellitusDiabetes1"
+                            name="patient.clinicalHistory.mellitusDiabetes1">
+            Diabetes Mellitus 1
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.mellitusDiabetes2"
+                            name="patient.clinicalHistory.mellitusDiabetes2">
+            Diabetes Mellitus 2
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.hIV"
+                            name="patient.clinicalHistory.hIV">
+            VIH/SIDA
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.anemia"
+                            name="patient.clinicalHistory.anemia">
+            Anemia
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.hepatitis"
+                            name="patient.clinicalHistory.hepatitis">
+            Hepatitis
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.heartProblems"
+                            name="patient.clinicalHistory.heartProblems">
+            Problemas cardiacos
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.tuberculosis"
+                            name="patient.clinicalHistory.tuberculosis">
+            Tuberculosis
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            name="patient.clinicalHistory.cancer"
+                            [(ngModel)]="patient.clinicalHistory.cancer">
+            Cáncer
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.headache"
+                            name="patient.clinicalHistory.headache">
+            Cefaleas
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.epilepsy"
+                            name="patient.clinicalHistory.epilepsy">
+            Epilepsia
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.cOPD"
+                            name="patient.clinicalHistory.cOPD">
+            EPOC
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.surgeries"
+                            name="patient.clinicalHistory.surgeries">
+            Cirugias
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.hypothyroidism"
+                            name="patient.clinicalHistory.hypothyroidism">
+            Hipotiroidismo
+          </mat-checkbox>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Otra ¿Cuál?" type="text" class="underline exportable" id="otherDiseases"
+                   [(ngModel)]="patient.clinicalHistory.otherDiseases" name="otherDiseases" #otherDiseases="ngModel">
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-checkbox class="example-margin exportable"
+                            color="primary"
+                            [(ngModel)]="patient.clinicalHistory.pacemaker"
+                            name="patient.clinicalHistory.pacemaker">
+            ¿Tiene usted un marcapaso?
+          </mat-checkbox>
+        </div>
+
+        <app-checkbox-with-text [booleanPropertyName]="'prosthesis'"
+                                [booleanPlaceholder]="'¿Tiene usted una prótesis?'"
+                                [stringPropertyName]="'prosthesisDetail'"
+                                [stringPlaceholder]="'¿Cuál?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text *ngIf="patient.gender==Gender.female"
+                                [booleanPropertyName]="'hasBeenPregnant'"
+                                [booleanPlaceholder]="'¿Ha tenido usted embarazos?'"
+                                [stringPropertyName]="'pregnancies'"
+                                [stringPlaceholder]="'¿Cuántos?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido y debe tener un máximo de 2 dígitos'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                [stringPattern]="'[0-9]{0,2}'"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <div class="form-group" *ngIf="patient.clinicalHistory.hasBeenPregnant">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Hijos nacidos vivos" type="number" class="underline exportable" id="childrenBorn"
+                   [(ngModel)]="patient.clinicalHistory.childrenBorn" name="childrenBorn" #childrenBorn="ngModel" pattern="[0-9]{0,2}"
+                   required onkeydown="javascript: return event.keyCode == 69 ? false : true">
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && childrenBorn.untouched) || childrenBorn.valid" class="alert alert-danger">
+            Este dato es requerido y debe tener un máximo de 2 dígitos
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="patient.clinicalHistory.hasBeenPregnant">
+          <mat-form-field class="formFieldAncho">
+            <mat-select placeholder="¿Los nacimientos fueron por parto o cesárea?" [(ngModel)]="patient.clinicalHistory.birthsType" #birthsType="ngModel" id="birthsType"
+                        name="birthsType" required class="underline exportable">
+              <mat-option *ngFor="let item of birthsTypes" [value]="item.value">{{item.text}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div [hidden]="(!form.submitted && birthsType.untouched) || birthsType.valid" class="alert alert-danger">
+            Este dato es requerido
+          </div>
+        </div>
+
+        <p class="exportable">Antecedentes familiares</p>
+
+        <p class="exportable">
+          Algún miembro de su familia ha padecido o padece de:
+        </p>
+
+        <app-checkbox-with-text [booleanPropertyName]="'familiarDiabetes'"
+                                [booleanPlaceholder]="'Diabetes'"
+                                [stringPropertyName]="'familiarDiabetesDetail'"
+                                [stringPlaceholder]="'¿Quién?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'familiarArterialHypertension'"
+                                [booleanPlaceholder]="'Hipertensión arterial'"
+                                [stringPropertyName]="'familiarArterialHypertensionDetail'"
+                                [stringPlaceholder]="'¿Quién?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'familiarHeartProblems'"
+                                [booleanPlaceholder]="'Problemas cardiacos'"
+                                [stringPropertyName]="'familiarHeartProblemsDetail'"
+                                [stringPlaceholder]="'¿Quién?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <app-checkbox-with-text [booleanPropertyName]="'familiarCancer'"
+                                [booleanPlaceholder]="'Cáncer'"
+                                [stringPropertyName]="'familiarCancerDetail'"
+                                [stringPlaceholder]="'¿Quién?'"
+                                [stringOcurrenceValue]="true"
+                                [requiredMessage]="'Este dato es requerido'"
+                                [form]="form"
+                                [model]="patient.clinicalHistory"
+                                classes="exportable">
+        </app-checkbox-with-text>
+
+        <div class="form-group">
+          <mat-form-field class="formFieldAncho">
+            <input matInput placeholder="Otra ¿Qué y Quién?" type="text" class="underline exportable" id="otherFamilyDiseases"
+                   [(ngModel)]="patient.clinicalHistory.otherFamilyDiseases" name="otherFamilyDiseases" #otherFamilyDiseases="ngModel">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/patients']">
+        <i class="fa fa-chevron-left"></i> Volver
+      </a>
+      <button type="submit" mat-raised-button class="btn btn-rounded btn-primary hidden-print pull-right">
+        Confirmar <i class="fa fa-check"></i>
+      </button>
+    </form>
+
+  </div>
+</div>

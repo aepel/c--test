@@ -1,0 +1,11 @@
+<div class="form-group">
+  <p-multiSelect [options]="options" (onChange)="onSelectChange($event)" [optionLabel]="optionLabel"
+              filter="true" name="model.selectedId" [style]="{'width':'100%'}"
+              [defaultLabel]="placeholder" [required]="required" appendTo="body"
+              #selectedId="ngModel" [(ngModel)]="selecteds" [disabled]="disabled"
+              selectedItemsLabel="{0} elementos seleccionados" maxSelectedLabels="10">
+  </p-multiSelect>
+  <div [hidden]="(!required) || (!form.submitted && selectedId.untouched) || selectedId.valid" class="alert alert-danger">
+    Debe seleccionar al menos una opción
+  </div>
+</div>

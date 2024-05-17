@@ -1,0 +1,60 @@
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+  <!-- Container-fluid starts -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="login-card card-block auth-body mr-auto ml-auto">
+          <form class="md-float-material">
+            <div class="text-center">
+              <img src="assets/images/auth/Logomca.png" width="157" height="67" alt="MCA">
+            </div>
+            <div class="auth-box">
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">Recupere su password</h3>
+                </div>
+              </div>
+              <p class="text-inverse b-b-default text-right">Volver al<a [routerLink]="['']"> Login.</a></p>
+              <div class="input-group" [ngClass]="{'has-success': f.submitted && password.valid, 'has-error' : f.submitted && !password.valid}">
+
+                <input type="password" class="form-control" placeholder="Password" id="newpassword" name="newpassword"   required />
+                
+
+                <span class="md-line">Nueva contraseña</span>
+              </div>
+              <div class="input-group" [ngClass]="{'has-success': f.submitted && password.valid, 'has-error' : f.submitted && !password.valid}">
+
+               
+                <input type="password" class="form-control" placeholder="Password" id="passwordconfirm" name="passwordconfirm" required />  
+
+                <span class="md-line">Confirmación contraseña</span>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Recuperar password</button>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+                <div class="col-md-10">
+                  <p class="text-inverse text-left m-b-0">Gracias por utilizar el sistema de adherencia</p>
+                  <p class="text-inverse text-left"><b>MCA latam</b></p>
+                </div>
+                <div class="col-md-2">
+                  <img src="assets/images/auth/logosmall.png" width="27" height="27"  alt="Mca Latam">
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of container-fluid -->
+</section>

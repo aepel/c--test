@@ -1,0 +1,38 @@
+<app-dropdown-with-filter [options]="doctors" [(value)]="treatment.doctorId"
+                          optionLabel="fullNameAndSpecialty"
+                          placeholder="Médico" [required]="readonly?false:true"
+                          [form]="form" controlName="doctorId"
+                          *ngIf="doctors" (change)="doctorSelected($event)"
+                          [disabled]="readonly">
+</app-dropdown-with-filter>
+
+<app-dropdown-with-filter [options]="patients" [(value)]="treatment.patientId"
+                          optionLabel="fullName"
+                          placeholder="Paciente" [required]="readonly?false:true"
+                          [form]="form" controlName="patientId"
+                          *ngIf="patients && !isLaboratory" (change)="patientSelected($event)"
+                          [disabled]="readonly">
+</app-dropdown-with-filter>
+
+<div class="form-group" *ngIf="isLaboratory">
+  <mat-form-field class="formFieldAncho">
+    <input matInput placeholder="Paciente" type="text" class="underline" id="name"
+           [(ngModel)]="treatment.patient.code" name="name" #name="ngModel" disabled>
+  </mat-form-field>
+</div>
+
+<app-dropdown-with-filter [options]="pathologies" [(value)]="treatment.pathologyId"
+                          optionLabel="name"
+                          placeholder="Patología" [required]="readonly?false:true"
+                          [form]="form" controlName="pathologyId"
+                          *ngIf="pathologies" (change)="pathologySelected($event)"
+                          [disabled]="readonly">
+</app-dropdown-with-filter>
+
+<app-dropdown-with-filter [options]="products" [(value)]="treatment.productId"
+                          optionLabel="name"
+                          placeholder="Producto" [required]="readonly?false:true"
+                          [form]="form" controlName="productId"
+                          *ngIf="products" (change)="productSelected($event)"
+                          [disabled]="readonly">
+</app-dropdown-with-filter>

@@ -1,0 +1,8 @@
+<form [formGroup]="_formGroup">
+    <mat-form-field class="formFieldAncho">
+        <input matInput [placeholder]="data.name" type="number" [(ngModel)]="data.value" name="{{ data.type }}_{{ data.id }}"
+               [min]="data.minimum" [max]="data.maximum" [required]="data.required" formControlName="{{data.id}}"
+               [readonly]="disabled">
+    </mat-form-field>
+    <br />
+    </form>

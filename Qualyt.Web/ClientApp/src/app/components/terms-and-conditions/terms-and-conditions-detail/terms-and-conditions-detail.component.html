@@ -1,0 +1,21 @@
+<section class="main-container">
+  <div class="card" *ngIf="termsAndConditions">
+    <div class="card-header card-info card-inverse">
+      <span class="card-title">Términos y condiciones</span>
+    </div>
+    <div class="card-block">
+      <form (ngSubmit)="onSubmit()" #tycForm="ngForm" *ngIf="termsAndConditions" autocomplete="off">
+        <div class="form-group">
+          <quill-editor [style]="{height: '500px'}" [readOnly]="!create && !edit"
+                        [(ngModel)]="termsAndConditions.text" name="termsAndConditions.text"
+                        placeholder="Términos y condiciones..." [required]="true"></quill-editor>
+        </div>
+        <a mat-raised-button class="btn btn-rounded hidden-print white" [routerLink]="['/terms-and-conditions']">
+          <i class="fa fa-chevron-left"></i> Volver
+        </a>
+        <button *ngIf="edit || create" type="button" mat-raised-button (click)="getLastPublishedText()"> Obtener último publicado <i class="fa fa-arrow-up"></i></button>
+        <button *ngIf="edit || create" type="submit" mat-raised-button [disabled]="!tycForm.valid">Confirmar <i class="fa fa-check"></i></button>
+      </form>
+    </div>
+  </div>
+</section>
